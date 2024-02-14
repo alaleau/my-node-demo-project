@@ -1,4 +1,7 @@
 # STEPS
+```
+  cache: 'npm'
+```
 
 ```
 name: 'Send notification'
@@ -12,13 +15,13 @@ inputs:
     required: false
 outputs:
   id:
-    description: 'Notification Id'
+    description: 'Notification id'
 runs:
   using: 'node20'
   main: './src/notify.js'
   
 ```
-### Call my custom action on CY
+### Call my custom action on CI
 ```
 - name: Send notification
   id: send-notification
@@ -49,6 +52,9 @@ function sendNotification(webhook, message) {
 
 ```
 
+### DEMO ACT.
+
+
 ## INPUTS
 ```
 with:
@@ -78,19 +84,11 @@ token:
   required: false
 ```
 
-
-### Use @actions library
-```
-const core = require("@actions/core")
-```
-
-```
-core.setFailed(e)
-```
-
 ## ADD output
 
 ```
+
+const core = require("@actions/core")
 
 try {
     await sendNotification(webhook, message);
@@ -110,4 +108,19 @@ try {
 const { sha, actor } = github.context;
 logger.info("sha" + sha);
 logger.info("actor" + actor);
+```
+
+```
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        type: choice
+        description: channel
+        options:
+          - PUBLIC
+          - PRIVATE
+      message:
+        required: true
+
 ```

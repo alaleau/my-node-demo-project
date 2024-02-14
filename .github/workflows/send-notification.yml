@@ -1,0 +1,34 @@
+name: Send notification workflow
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        type: choice
+        description: channel
+        options:
+          - PUBLIC
+          - PRIVATE
+      message:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Send notification
+        id: send-notification
+        uses: ./notify
+        with:
+          webhook: ${{ secrets.NOTIFY_WEBHOOK }}
+          message: "My message"

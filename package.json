@@ -8,7 +8,9 @@
     "start": "ts-node ./src/index.ts",
     "test": "vitest run",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "act:job:build": "act -j build",
+    "act:event:push": "act push"
   },
   "keywords": [],
   "author": "",

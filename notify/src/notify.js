@@ -1,5 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { logger } from "../../src/logger.js";
 
 function sendNotification(webhook, message) {
     const options = {
