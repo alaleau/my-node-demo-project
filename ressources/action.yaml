@@ -1,0 +1,15 @@
+name: 'Send notification'
+description: 'Send notification'
+inputs:
+  webhook:
+    description: 'url of api to call'
+    required: false
+  message:
+    description: 'message details'
+    required: false
+outputs:
+  id:
+    description: 'Notification id'
+runs:
+  using: 'node20'
+  main: './notify/src/notify.js'

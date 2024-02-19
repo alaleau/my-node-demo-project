@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Nodejs
+      - name: Install NodeJs
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
@@ -31,4 +31,8 @@ jobs:
         uses: ./notify
         with:
           webhook: ${{ secrets.NOTIFY_WEBHOOK }}
-          message: "My message"
+          message: ${{ github.event.inputs.message }}
+          channel: ${{ github.event.inputs.message }}
+
+      - name: Display send notification output
+        run: echo "${{steps.send-notification.outputs.id}}"
