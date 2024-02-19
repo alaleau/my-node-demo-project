@@ -1,5 +1,4 @@
 import express, { Express, Request, Response } from 'express'
-import request from 'supertest'
 
 const app: Express = express()
 app.get('/health', (req: Request, res: Response) => {

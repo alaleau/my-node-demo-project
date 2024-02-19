@@ -1,15 +1,6 @@
-name: Send notification workflow
+name: quality workflow
 on:
-  workflow_dispatch:
-    inputs:
-      channel:
-        type: choice
-        description: channel
-        options:
-          - PUBLIC
-          - PRIVATE
-      message:
-        required: true
+  push:
 
 jobs:
   build:
@@ -18,19 +9,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install NodeJs
-        uses: actions/setup-node@v3
+      - name: Nodejs
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           cache: 'npm'
 
-      - uses: ./.github/actions/my-composites-actions/actions/cleanup-cache-action
+      - uses: ./.github/actions/nest-ci-action
         with:
           package_manager: "npm"
 
       - name: Send notification
         id: send-notification
-        uses: ./notify
+        uses: ./
         with:
           webhook: ${{ secrets.NOTIFY_WEBHOOK }}
           message: ${{ github.event.inputs.message }}
@@ -42,3 +33,5 @@ jobs:
       - uses: alaleau/my-composites-actions/actions/cleanup-cache-action@main
         with:
           package_manager: "npm"
+
+

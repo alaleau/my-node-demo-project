@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
-import {logger} from "../../src/logger.js";
 import * as github from "@actions/github";
+import {logger} from "../../src/logger.js";
 
 function sendNotification(webhook, message) {
     const options = {
@@ -21,8 +21,10 @@ function sendNotification(webhook, message) {
     const webhook =  core.getInput("webhook");
 
     const { sha, actor } = github.context;
+
     logger.info("sha " + sha);
     logger.info("actor " + actor);
+
 
     try {
         await sendNotification(webhook, message);
@@ -30,4 +32,5 @@ function sendNotification(webhook, message) {
     } catch (e) {
         core.setFailed(e)
     }
+
 })();

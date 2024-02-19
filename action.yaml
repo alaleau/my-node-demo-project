@@ -9,7 +9,7 @@ inputs:
     required: false
 outputs:
   id:
-    description: 'Notification Id'
+    description: 'Notification id'
 runs:
   using: 'node20'
-  main: './src/notify.js'
+  main: './notify/src/notify.js'

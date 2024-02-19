@@ -1,0 +1,27 @@
+name: "NestJS CI"
+description: "Installs dependencies, runs tests, and builds the NestJS application"
+inputs:
+  node_version:
+    description: "Node.js version to use"
+    required: false
+    default: "18"
+  install_command:
+    description: "Command to install dependencies (npm install or yarn install)"
+    required: false
+    default: "npm install"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+
+    - name: Install dependencies
+      run: ${{ inputs.install_command }}
+      shell: bash
+
+    - name: Build the application
+      run: npm run build
+      shell: bash

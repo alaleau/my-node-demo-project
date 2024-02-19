@@ -24,9 +24,7 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      - uses: ./.github/actions/my-composites-actions/actions/cleanup-cache-action
-        with:
-          package_manager: "npm"
+      - run: npm ci
 
       - name: Send notification
         id: send-notification
@@ -38,7 +36,3 @@ jobs:
 
       - name: Display send notification output
         run: echo "${{steps.send-notification.outputs.id}}"
-
-      - uses: alaleau/my-composites-actions/actions/cleanup-cache-action@main
-        with:
-          package_manager: "npm"
