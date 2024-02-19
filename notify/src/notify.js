@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { logger } from "../../src/logger.js";
+import {logger} from "../../src/logger.js";
 
 function sendNotification(webhook, message) {
     const options = {
@@ -17,15 +17,12 @@ function sendNotification(webhook, message) {
 };
 
 (async () => {
-   // const webhook = "https://mock.codes"
-   // const message = "My message"
-
     const message = core.getInput("message");
     const webhook =  core.getInput("webhook");
 
     const { sha, actor } = github.context;
-    logger.info("sha" + sha);
-    logger.info("actor" + actor);
+    logger.info("sha " + sha);
+    logger.info("actor " + actor);
 
     try {
         await sendNotification(webhook, message);

@@ -21,6 +21,7 @@ runs:
   main: './src/notify.js'
   
 ```
+
 ### Call my custom action on CI
 ```
 - name: Send notification
@@ -28,37 +29,44 @@ runs:
   uses: ./notify
 ```
 
+
 ### Create send notification fonction
 ```
 function sendNotification(webhook, message) {
-  const options = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    params: {
-      message
-    }
-  };
-   return fetch(webhook, options)
-    .then(response => response.json())
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        params: {
+            message
+        }
+    };
+    return fetch(webhook, options)
+        .then(response => response.json())
 };
 
 (async () => {
     const webhook = "https://mock.codes"
     const message = "My message"
-    await sendNotification(url, message);
+    await sendNotification(webhook, message);
 })();
 
 ```
 
-### DEMO ACT.
+```
+- name: Send notification
+  id: send-notification
+  uses: ./notify
+```
 
+
+### ACT 
 
 ## INPUTS
 ```
 with:
-  url: "https://mock.codes"
+  webhook: "https://mock.codes"
   message: "My message"
 ```
 
@@ -71,18 +79,18 @@ with:
     message: "My message"
 ```
 
-
 ```
 const message = core.getInput("message");
 const webhook =  core.getInput("webhook");
 ```
 
-### Use secret
+## context
 ```
-token:
-  description: 'identification token'
-  required: false
+const { sha, actor } = github.context;
+logger.info("sha " + sha);
+logger.info("actor " + actor);
 ```
+
 
 ## ADD output
 
@@ -105,9 +113,9 @@ try {
 
 ## context
 ```
-const { sha, actor } = github.context;
-logger.info("sha" + sha);
-logger.info("actor" + actor);
+    const { sha, actor } = github.context;
+    logger.info("sha " + sha);
+    logger.info("actor " + actor);
 ```
 
 ```
@@ -123,4 +131,15 @@ on:
       message:
         required: true
 
+```
+
+### partage
+
+```
+  - name: Send notification
+    id: send-notification
+    uses: alaleau/my-node-demo-project@main
+    with:
+      webhook: ${{ secrets.NOTIFY_WEBHOOK }}
+      message: "My message"
 ```
