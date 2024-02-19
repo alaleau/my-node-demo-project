@@ -1,0 +1,29 @@
+name: "Cleanup Cache"
+description: "Nettoie le cache des dépendances pour économiser de l'espace"
+inputs:
+  package_manager:
+    description: "Le gestionnaire de paquets utilisé (npm, yarn, pip, etc.)"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Nettoyage npm/yarn
+      if: ${{ inputs.package_manager == 'npm' || inputs.package_manager == 'yarn' }}
+      run: |
+        echo "Suppression du dossier node_modules..."
+        rm -rf node_modules
+        echo "Nettoyage du cache npm/yarn..."
+        if [ "${{ inputs.package_manager }}" == "npm" ]; then
+          npm cache clean --force
+        else
+          yarn cache clean
+        fi
+      shell: bash
+
+    - name: Nettoyage pip
+      if: ${{ inputs.package_manager == 'pip' }}
+      run: |
+        echo "Suppression du cache pip..."
+        pip cache purge
+      shell: bash
